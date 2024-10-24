@@ -225,10 +225,45 @@ h2 {
 }
 
 
+/* sample button */
 
+.sample__button {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    width: 300px;
+    height: 60px;
+    align-self: flex-end;
+    font-size: 1.5rem;
+    letter-spacing: .07em;
+    background: #555;
+    color: #fff;
+    border-radius: 5px;
+    border: none;
+    opacity: .9;
+}
 
+.sample__button:hover {
+    opacity: 1;
+    transition: .2s;
+}
 
+.sample__button:focus {
+    outline: none;
+    box-shadow: 0 0 0 4px #cbd6ee;
+}
 
+.sample__icon {
+    width: 25px;
+    height: 25px;
+    color: white;
+}
+
+.sample__icon--hide {
+    display: none;
+}
 
 
 
