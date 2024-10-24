@@ -1,77 +1,95 @@
-/*
-
-Задание 3
-
-Написать скрипт, который при открытии страницы будет делать следующее:
-Если пользователь зашел в первый раз, вывести окно prompt с сообщением: «Добро пожаловать! Назовите, пожалуйста, ваше имя».
-После того, как пользователь введет имя, записать имя, дату и время визита в localStorage.
-Если пользователь открывает страницу не впервые (это можно узнать по наличию соответствующих записей в localStorage), вывести в alert сообщение вида: «Добрый день, *имя пользователя*! Давно не виделись. 
-В последний раз вы были у нас *дата последнего посещения*» и перезаписать дату последнего посещения.
-Дату можно вывести в любом удобочитаемом формате (не Timestamp, должен четко читаться день, месяц, год и время — часы и минуты).
-
-*/
-
-import {LastVisit, LastVisitStorage, formatDate, formatTime} from './classes.js';
-
-const lastVisit = LastVisitStorage.getLastVisit();
-
 document.addEventListener('DOMContentLoaded', ()=> {
     function onclick(selector, handler) {
         document.querySelector(selector).onclick = handler;
     }
   
-    onclick('#btn-save', (event) => act_save(event));
-    onclick('#btn-forget', () => act_forget());
-
-    showState();
+    onclick('.sample__button', () => act_fetch());
 });
 
-function showState() {
-    const visitor_form = document.querySelector("#visitor_form");
-    const visitor_message = document.querySelector("#visitor_message");
-    const visitor_header = document.querySelector("#visitor_header");
-    const visitor_text = document.querySelector("#visitor_text");
 
-    if (!lastVisit.isEmpty()) {
+const response_container = document.querySelector('#response_container');
+const ul = document.querySelector('.response__list');
 
-        const dt = lastVisit.getDate();
+function act_fetch() {
+    hideResponse();
 
-        visitor_header.innerHTML = `Здравствуйте, ${lastVisit.getName()}!`;
-        visitor_text.innerHTML = `В последний раз вы были у нас ${formatDate(dt)} г. в ${formatTime(dt)}`;
+    clearResponse();
 
-        
-        visitor_form.classList.add('page__content--hidden');
-        visitor_message.classList.remove('page__content--hidden');
+    addItem(`Размер экрана - ширина: ${window.screen.width} px, высота: ${window.screen.height} px`);
 
-        lastVisit.setNow();
-        LastVisitStorage.save(lastVisit);
+    if ("geolocation" in navigator && navigator.geolocation) {
+        addItem('Браузер поддерживает определение местоположения');
 
-    } else {
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                const { coords } = position;
+                addItem(`Местоположение - широта: ${coords.latitude} °, долгота: ${coords.longitude} °`);
+            },
+            () => {
+                addItem('Информация о местоположении недоступна');
+            }
+        );        
 
-        visitor_message.classList.add('page__content--hidden');
-        visitor_form.classList.remove('page__content--hidden');
-    }
+      } else {
+        addItem('Браузер не поддерживает определение местоположения');
+    }    
+
+    showResponse();
 }
 
-
-function act_save(event) {
-    event.preventDefault();
-
-    const name = document.querySelector("#visitor_name").value;
-
-    lastVisit.setVisit(name === '' ? 'Аноним' : name);
-    LastVisitStorage.save(lastVisit);
-
-    showState();
+function clearResponse() {
+    while (ul.firstChild) {
+        ul.removeChild(ul.lastChild);
+    };
 }
-  
-function act_forget() {
-    lastVisit.clear();
-    LastVisitStorage.save(lastVisit);
 
-    showState();
+function addItem(text) {
+    const li = document.createElement("li");
+    li.innerText = text;
+    ul.appendChild(li);
 }
-  
-  
 
+function hideResponse() {
+    response_container.classList.add('page__content--hidden');
+}
 
+function showResponse() {
+    response_container.classList.remove('page__content--hidden');
+}
+
+function updateResponse(data) {
+    hideResponse();
+
+    clearResponse();
+
+    data.forEach(element => {
+        addItem(element);
+    });
+
+    showResponse();
+}
+
+function getData() {
+    let d = [];
+
+    d.push(`Размер экрана - ширина: ${window.screen.width}px, высота: ${window.screen.height}px`);
+
+    if ("geolocation" in navigator && navigator.geolocation) {
+        d.push('Браузер поддерживает определение местоположения');
+
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                const { coords } = position;
+                d.push(`Местоположение - широта: ${coords.latitude}, долгота: ${coords.longitude}`);
+            },
+            () => {
+                d.push('Информация о местоположении недоступна');
+            }
+        );        
+
+      } else {
+        d.push('Браузер не поддерживает определение местоположения');
+    }    
+
+    return d;
+}
