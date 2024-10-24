@@ -71,6 +71,11 @@ h2 {
     padding-left: 10px;
 }
 
+
+
+
+
+
 .page {
     display: flex;
     flex-direction: column;
@@ -167,6 +172,64 @@ h2 {
     justify-content: space-between;
     gap: 25px;
 }
+
+/* tooltip */
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
+  
+.tooltip .tooltip__text {
+    visibility: hidden;
+    width: 300px;
+    background-color: black;
+    color: #fff;
+    text-align: left;
+    padding: 10px;
+    border-radius: 6px;
+   
+    position: absolute;
+    top: 0;
+    left: 190px;
+    z-index: 1;
+}
+  
+.tooltip:hover .tooltip__text {
+    visibility: visible;
+}
+
+
+/* flag */
+
+.flag__wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.flag {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.flag__caption {
+    font-size: 1.2rem;
+}
+
+.flag__pict {
+    width: 180px;
+    height: 119px;
+}
+
+
+
+
+
+
+
 
 
 .response__list--completed {
