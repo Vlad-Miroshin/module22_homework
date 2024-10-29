@@ -119,7 +119,7 @@ h2 {
 
 .page__input {
     font-size: 1rem;
-    border: 2px solis #ccc;
+    border: 2px solid var(--main-color-gray);
     width: 95%;
     padding: 10px;
     margin: 10px auto;
@@ -285,8 +285,100 @@ h2 {
 }
 
 
+/* chat */
+
+.chat__form {
+    display: flex;
+    flex-direction: row;
+    width: 600px;
+    border: 3px solid #ccc;
+    padding: 30px;
+    background: #fff;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+    border-radius: 15px;
+    gap: 10px;
+}
+
+.chat__input {
+    font-size: 1rem;
+    border: 2px solid var(--main-color-gray);
+    width: 330px;
+    padding: 10px;
+    margin: 10px auto;
+    border-radius: 5px;
+}
+
+.chat__button {
+    width: 150px;
+    height: 40px;
+    align-self: center;
+    font-size: 1rem;
+    background: #555;
+    color: #fff;
+    border-radius: 5px;
+    border: none;
+    opacity: .9;
+}
+
+.chat__button:hover {
+    opacity: 1;
+    transition: .3s;
+}
+
+.chat__content {
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+    background: #fff;
+    margin: 50px 0 200px 0;
+    gap: 15px;
+}
+
+.chat__content--hidden {
+    display: none;
+}
+
+.chat__info {
+    align-self: center;
+}
+
+.chat__message {
+    border: 1px solid #ccc;
+    padding: 10px;
+    background: #fff;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+    border-radius: 5px;
+}
+
+.chat__message--sended {
+    align-self: flex-end;
+    background: #b8f3ad;
+}
+
+.chat__message--received {
+    align-self: flex-start;
+    background: #ccd6f8;
+}
+
+.chat__message--geo {
+    align-self: flex-end;
+    background: #f5d7c2;
+}
+
+.chat__message--geo:hover {
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+    /* transition: .1s; */
+}
+
+.chat__link {
+    text-decoration: none;
+    color: inherit;
+}
 
 
+
+/* footer */
 
 .footer {
     padding-top: 4rem;

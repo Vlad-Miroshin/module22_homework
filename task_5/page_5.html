@@ -30,6 +30,31 @@
                 Сообщение, которое отправит обратно эхо-сервер, не выводить.
             </div>
 
+            <div class="page__content">
+                <div class="chat__form">
+                    <input class="chat__input" type="text" placeholder="Текст сообщения">
+                    <button id="btn_send_message" class="chat__button">Отправить</button>
+                    <button id="btn_send_geo" class="chat__button">Гео-локация</button>
+                </div>
+            </div>
+    
+            <div class="chat__content chat__content--hidden">
+                <div class="chat__info">
+                    connected to webSocket
+                </div>
+
+                <div class="chat__message chat__message--sended">
+                    Сообщение отправителя
+                </div>
+
+                <div class="chat__message chat__message--received">
+                    Сообщение от сервера
+                </div>
+
+                <a class="chat__message chat__message--geo chat__link">
+                    www.openstreetmap.org
+                </a>
+            </div>
             
         </div>
     </main>
