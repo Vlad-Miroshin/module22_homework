@@ -41,7 +41,7 @@ async function act_send_geo() {
             (position) => {
                 geoSended = true;
                 socket.send([position.coords.latitude, position.coords.longitude]);
-                addGeolocation(position);
+                addGeo(position);
             },
             () => {
                 addInfo('Информация о местоположении недоступна');
@@ -56,8 +56,8 @@ async function ensureSocket() {
     if (!socket) {
         socket = new WebSocket(wsUri);
 
-        let connection_resolvers = [];
-        let checkConnection = () => {
+        const connection_resolvers = [];
+        const checkConnection = () => {
             return new Promise((resolve, reject) => {
                 if (socket.readyState === WebSocket.OPEN) {
                     resolve();
@@ -70,13 +70,16 @@ async function ensureSocket() {
 
         socket.onopen = () => { 
             connection_resolvers.forEach(r => r.resolve());
-            addInfo(`connected to ${socket.url}`); 
+            addInfo(`Установлено соединение с ${socket.url}`); 
         }
+
         socket.onclose = () => { 
-            addInfo('disconnected'); 
+            addInfo('Соединение закрыто'); 
             socket = null;
         }
+
         socket.onmessage = (evt) => { addReceived(evt.data); }
+        
         socket.onerror = (evt) => { addInfo(evt.data); }
 
         await checkConnection();
@@ -137,7 +140,7 @@ function addSended(text) {
     addItem(text, ['chat__message', 'chat__message--sended']);
 }
 
-function addGeolocation(position) {
+function addGeo(position) {
     const { coords } = position;
     const text = `Широта: ${coords.latitude} °, долгота: ${coords.longitude} °`;
     const url = `https://www.openstreetmap.org?mlat=${coords.latitude}&mlon=${coords.longitude}`;
